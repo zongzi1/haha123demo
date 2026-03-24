@@ -1,0 +1,46 @@
+# Minimal Azure Pipeline for Maven + JDK 1.8 on Linux (No Unit Tests)
+trigger:
+  branches:
+    include:
+      - main  # 或你的默认分支
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
+  MAVEN_OPTS: "-Xmx1024m"
+
+steps:
+
+# 1. 显示 Java 和 Maven 版本
+- script: |
+    echo "JAVA_HOME=$JAVA_HOME"
+    java -version
+    javac -version
+    mvn -version
+  displayName: 'Check Java & Maven Versions'
+
+# 2. Maven 构建（不收集单元测试）
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'clean install -DskipTests'   # 跳过测试
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+  displayName: 'Build with Maven (No Tests)'
+
+# 3. 发布构建产物
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'target'
+    ArtifactName: 'java-app'
+    publishLocation: 'Container'
+  displayName: 'Publish Build Artifacts'
+
+# 部署到 App Services
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'haha123demo'
+    appName: 'haha0324'
+    package: 'target/*.jar'  # 指向你的构建产物
