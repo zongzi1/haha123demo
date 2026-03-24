@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  springboot:
+    build: .
+    container_name: hahadb
+    depends_on:
+      - mysql
+    ports:
+      - "80:80"
+    restart: always
+
+volumes:
+  mysql-data:
