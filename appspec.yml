@@ -1,0 +1,17 @@
+version: 0.0
+os: linux
+
+files:
+  - source: target/
+    destination: /opt/app
+
+hooks:
+  BeforeInstall:
+    - location: scripts/before_install.sh
+      timeout: 300
+      runas: root
+
+  ApplicationStart:
+    - location: scripts/start_app.sh
+      timeout: 300
+      runas: root
