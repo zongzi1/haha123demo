@@ -11,7 +11,9 @@ phases:
       - mvn clean package -DskipTests
 
   post_build:
-    - echo Build completed
+    commands:
+      - echo Build completed
+
 
 artifacts:
   files:
