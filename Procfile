@@ -1,1 +1,1 @@
-web: java -jar target/haha123.jar
+web: java -jar haha123.jar
