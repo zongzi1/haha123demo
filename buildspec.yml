@@ -9,6 +9,7 @@ phases:
     commands:
       - echo Build started...
       - mvn clean package -DskipTests
+      - cp target/*.jar .
 
   post_build:
     commands:
@@ -17,6 +18,5 @@ phases:
 
 artifacts:
   files:
-    - target/*.jar
-    - appspec.yml
-    - scripts/**
+    - *.jar
+    - Procfile
