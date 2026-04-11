@@ -21,6 +21,7 @@ public class Haha123demoApplication {
 
 	@GetMapping("haha123")
 	public String haha() {
+		System.out.println("123");
 		return "haha20230610"+myJpa.findById(1).get().name;
 	}
 }
